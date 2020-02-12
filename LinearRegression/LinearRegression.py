@@ -18,25 +18,19 @@ def dataProcess(df):
     # # astype() 转换array中元素数据类型
     # array = np.array(df).astype(float)
     # 将数据集拆分为多个数据帧
-    tempxlist=[]
-    tempylist=[]
+    x_data=[]
+    y_data=[]
+    array=np.array(pm).astype(float)
     for i in range(15):
-        tempx=df.iloc[:,i:i+9]
-        tempy=pm.iloc[:, i+9]
-        tempx.columns=np.array(range(9))
-        tempy.columns=['1']
-        tempxlist.append(tempx)
-        tempylist.append(tempy)
-        
-
-
-
-    '''
-    # 将每行数据都scale到0到1的范围内，有利于梯度下降，但经尝试发现效果并不好
-    for i in range(18):
-        if(np.max(x[:, i, :]) != 0):
-            x[: , i, :] /= np.max(x[:, i, :])
-    '''
+        #读取i到i+9列
+        tempx=array[:,i:i+9]
+        tempy=array[:, i+9]
+        x_data.append(tempx)
+        y_data.append(tempy)
+    # x=np.array(x_data, dtype=float)
+    x=np.array(x_data)
+    y=np.array(y_data)
+    print(x)
     return x, y, array
 
 # 更新参数，训练模型
@@ -112,8 +106,10 @@ def test():
     #只读取PM2.5的行
     df=df[df['test'].isin(['PM2.5'])]
     #删除PM2.5的列
-    df=df.drop(['test'], axis=1)
-    print(df)
+    # df=df.drop(['test'], axis=1)
+    # print(df)
+    dataProcess(df)
 if __name__ == '__main__':
     test()
+    
     # main()
